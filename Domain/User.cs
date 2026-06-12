@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace WebApplication1.Domain;
 
+[Index(nameof(Email), IsUnique = true)]
 public class User(string name, string email)
 {
     public Guid Id { get; set; }

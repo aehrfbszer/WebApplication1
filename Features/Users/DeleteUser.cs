@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 public class DeleteUser
 {
-    public record Request(IEnumerable<Guid> Ids);
-    public static async Task<Results<NoContent, NotFound>> DeleteSome(Request request, AppDbContext db, CancellationToken cancellationToken)
+    public static async Task<Results<NoContent, NotFound>> DeleteSome(Guid[] ids, AppDbContext db, CancellationToken cancellationToken)
     {
-        int deletedCount = await db.Users.Where(u => request.Ids.Contains(u.Id)).ExecuteDeleteAsync(cancellationToken);
+        int deletedCount = await db.Users.Where(u => ids.Contains(u.Id)).ExecuteDeleteAsync(cancellationToken);
         if (deletedCount > 0)
         {
             return TypedResults.NoContent();

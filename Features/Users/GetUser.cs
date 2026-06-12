@@ -39,12 +39,12 @@ public class GetUser
         // 2. 现代 Like 模糊查询（完美生成参数化 SQL，避免 SQL 注入且走数据库索引优化）
         if (!string.IsNullOrWhiteSpace(request.Name))
         {
-            query = query.Where(u => EF.Functions.Like(u.Name, $"%{request.Name}%"));
+            query = query.Where(u => u.Name.Contains(request.Name)); // EF Core 会智能翻译成 SQL 的 LIKE '%xxx%'
         }
 
         if (!string.IsNullOrWhiteSpace(request.Email))
         {
-            query = query.Where(u => EF.Functions.Like(u.Email, $"%{request.Email}%"));
+            query = query.Where(u => u.Email.Contains(request.Email)); // EF Core 会智能翻译成 SQL 的 LIKE '%xxx%'
         }
 
         // 3. 🎯 高性能并发/异步统计符合条件的总条数（必须在 Skip/Take 之前执行）
