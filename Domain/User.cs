@@ -1,0 +1,9 @@
+namespace WebApplication1.Domain;
+
+public class User(string name, string email)
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; } = name;
+    public string Email { get; set; } = email;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
